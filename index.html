@@ -79,9 +79,11 @@ box-shadow:0 14px 40px rgba(0,0,0,.6)}
 justify-content:center;overflow:hidden;position:relative}
 .char-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .char-photo .ph{color:var(--dim);font-size:.8rem;text-align:center;padding:1rem}
-.char-tag{position:absolute;top:10px;left:10px;font-size:.68rem;text-transform:uppercase;
-letter-spacing:1px;padding:.22rem .55rem;border-radius:999px;
-background:rgba(13,11,15,.85);border:1px solid var(--border);color:var(--gold-soft)}
+.char-tags{position:absolute;top:10px;left:10px;display:flex;gap:.3rem;
+flex-wrap:wrap;max-width:90%}
+.char-tag{font-size:.66rem;text-transform:uppercase;letter-spacing:.8px;
+padding:.22rem .55rem;border-radius:999px;background:rgba(13,11,15,.85);
+border:1px solid var(--border);color:var(--gold-soft)}
 .char-info{padding:.85rem 1rem 1rem}
 .char-info h3{color:var(--gold);font-size:1.1rem;margin-bottom:.15rem}
 .char-info .role{color:var(--dim);font-size:.8rem}
@@ -99,7 +101,10 @@ border-radius:50%;font-size:1.2rem;cursor:pointer;line-height:1;z-index:2}
 .modal-photo{width:100%;max-height:320px;object-fit:cover;display:block;background:var(--bg-soft)}
 .modal-body{padding:1.3rem 1.5rem 1.7rem}
 .modal-body h2{color:var(--gold);margin-bottom:.15rem}
-.modal-role{color:var(--dim);font-size:.88rem;margin-bottom:.9rem}
+.modal-role{color:var(--dim);font-size:.88rem;margin-bottom:.5rem}
+.modal-factions{display:inline-block;font-size:.7rem;text-transform:uppercase;
+letter-spacing:1px;color:var(--gold-soft);border:1px solid var(--border);
+padding:.2rem .6rem;border-radius:999px;margin-bottom:.9rem}
 .modal-body p{font-size:.94rem;margin-bottom:.7rem}
 .modal-quote{border-left:3px solid var(--fire);padding-left:.85rem;font-style:italic;
 color:var(--gold-soft);margin-top:.9rem}
@@ -238,40 +243,57 @@ color:var(--dim);font-size:.82rem;margin-top:2.5rem}
 <script>
 /* ============ ДАННЫЕ ============ */
 const CHARACTERS=[
-{id:"rebekka",name:"Ребекка Амайя",full:"Десма Лилиан Ребекка Амайя Хати Марриенсен",role:"Всадница Руны, королева Дикой Охоты",faction:"dikaya",img:"images/rebekka.jpg",
-desc:"Сирота-полукровка, дочь Кироса Марриенсена и смертной женщины (гл. 15). С тринадцати лет прогуливала школу (гл. 9). После смерти матери осталась с младшим братом Ромусом. Обуздала чёрную драконицу Руну на Пустом острове, чтобы попасть в Лармар и спасти брата. Пустая. После инициации стала королевой Дикой Охоты.",
+{id:"rebekka",name:"Ребекка Амайя",full:"Десма Лилиан Ребекка Амайя Хати Марриенсен",
+role:"Всадница Руны, королева Дикой Охоты",factions:["dikaya","marrien"],img:"images/rebekka.jpg",
+desc:"Сирота-полукровка, дочь Кироса Марриенсена и смертной женщины (гл. 15). С тринадцати лет прогуливала школу (гл. 9). После смерти матери осталась с младшим братом Ромусом. Обуздала чёрную драконицу Руну на Пустом острове, чтобы попасть в Лармар и спасти брата. Пустая. По крови — Марриенсен, по духу и короне — Дикая Охота.",
 quote:"Я не сомневаюсь в принятых решениях. Никогда.",stats:{strength:70,magic:90,mind:75,loyalty:95}},
-{id:"shayan",name:"Шаян Фархад",full:"Шаян Араш Зияд Джан-Ияд Фархад",role:"Верховный баргат, глава ше’ру, король Дикой Охоты",faction:"sheru",img:"images/shayan.jpg",
+
+{id:"shayan",name:"Шаян Фархад",full:"Шаян Араш Зияд Джан-Ияд Фархад",
+role:"Верховный баргат, глава ше’ру, король Дикой Охоты",factions:["sheru","dikaya"],img:"images/shayan.jpg",
 desc:"Верховный баргат Шеррувии, комендант академии Лармар, глава ше’ру. Наследник Двора Дикой Охоты, брат погибшего короля (гл. 25). Триста лет назад проклят Клаусом и Кайлом, заставлявшими его убивать свой народ. Огонь и кровь — его элементы. Истинная пара Ребекки. Второе имя — Араш.",
 quote:"Ты моя одержимость.",stats:{strength:95,magic:95,mind:88,loyalty:90}},
-{id:"alakay",name:"Алакай Йоль",full:"Алакай Йоль (Кай)",role:"Ше’ру, правая рука баргата",faction:"sheru",img:"images/alakay.jpg",
+
+{id:"alakay",name:"Алакай Йоль",full:"Алакай Йоль (Кай)",
+role:"Ше’ру, правая рука баргата",factions:["sheru"],img:"images/alakay.jpg",
 desc:"Молчаливый ше’ру с севера, всадник белой драконицы Саны. Потерял младшую сестру, чей амулет носит как память (гл. 12, 18). Спасает Ребекку от Балара, дарит ей амулет и становится её другом. Впоследствии женится на Рунфрид (гл. 31).",
 quote:"Я полагаю, тебе здесь нужен друг, Ребекка.",stats:{strength:90,magic:85,mind:88,loyalty:92}},
-{id:"gayar",name:"Гаяр",full:"Гаяр",role:"Ше’ру",faction:"sheru",img:"images/gayar.jpg",
+
+{id:"gayar",name:"Гаяр",full:"Гаяр",role:"Ше’ру",factions:["sheru"],img:"images/gayar.jpg",
 desc:"Дерзкий и наглый ше’ру, любитель борделей и вина. Блестящий мечник, верный друг Шаяна. Именно он первым замечает Ребекку возле купальни и подшучивает над Шаяном (гл. 18, 19, 23).",
 quote:"А что здесь за мышка такая прячется?",stats:{strength:88,magic:80,mind:75,loyalty:85}},
-{id:"yafis",name:"Яфис",full:"Яфис",role:"Ше’ру",faction:"sheru",img:"images/yafis.jpg",
+
+{id:"yafis",name:"Яфис",full:"Яфис",role:"Ше’ру",factions:["sheru"],img:"images/yafis.jpg",
 desc:"Спокойный и рассудительный ше’ру. Коротко стриженные русые волосы, зелено-голубые глаза. Участвует в обсуждении планов отряда и тренирует Ромуса после инициации (гл. 23, 25).",
 quote:"",stats:{strength:85,magic:82,mind:86,loyalty:88}},
-{id:"kasid",name:"Касид",full:"Касид",role:"Ше’ру",faction:"sheru",img:"images/kasid.jpg",
+
+{id:"kasid",name:"Касид",full:"Касид",role:"Ше’ру",factions:["sheru"],img:"images/kasid.jpg",
 desc:"Ше’ру с золотистыми глазами, держится рядом с Яфисом. Упоминается в сценах отряда (гл. 23).",
 quote:"",stats:{strength:84,magic:83,mind:80,loyalty:85}},
-{id:"danis",name:"Данис",full:"Данис",role:"Ше’ру",faction:"sheru",img:"images/danis.jpg",
+
+{id:"danis",name:"Данис",full:"Данис",role:"Ше’ру",factions:["sheru"],img:"images/danis.jpg",
 desc:"Ше’ру с тёмным ёжиком волос и фиолетовым камнем на груди. Участвует в обсуждении судьбы Двора (гл. 23).",
 quote:"",stats:{strength:86,magic:81,mind:78,loyalty:84}},
-{id:"romus",name:"Ромус Шаалер",full:"Ромус Акрам Галиб Данис Шаалер",role:"Гарпия, Хранитель Шторма",faction:"dikaya",img:"images/romus.jpg",
+
+{id:"romus",name:"Ромус Шаалер",full:"Ромус Акрам Галиб Данис Шаалер",
+role:"Гарпия, Хранитель Шторма",factions:["dikaya"],img:"images/romus.jpg",
 desc:"Младший брат Ребекки по матери, сын помощника пекаря с севера (гл. 9). Хилый, вечно болеющий, но с блестящим умом. Оказался гарпией — древним существом, хранителем знаний (гл. 25). После инициации вырос на десять лет и обрёл крылья, рога и силу (гл. 26). Первый Хранитель Шторма (эпилог).",
 quote:"Ты никогда не была одна. Я всегда буду на твоей стороне.",stats:{strength:75,magic:95,mind:99,loyalty:99}},
-{id:"runa",name:"Рунфрид Дей’Кейн",full:"Рунфрид Дей’Кейн (Руна)",role:"Чёрная драконица, наследница Двора Драконов",faction:"drakony",img:"images/runa.jpg",
-desc:"Последняя наследница династии Чернозубых драконов Сумрачной равнины, наследница драконьего престола (гл. 16, 25). Племянница драконьей принцессы, родной тёти, вступившей в союз с королём Дикой Охоты (гл. 25). Саркастичная, обожает пиво и крабов. Десятилетиями скрывалась на Пустом острове, пока не выбрала Ребекку всадницей.",
+
+{id:"runa",name:"Рунфрид Дей’Кейн",full:"Рунфрид Дей’Кейн (Руна)",
+role:"Чёрная драконица, наследница Двора Драконов",factions:["drakony","dikaya"],img:"images/runa.jpg",
+desc:"Последняя наследница династии Чернозубых драконов Сумрачной равнины, наследница драконьего престола (гл. 16, 25). Племянница драконьей принцессы, родной тёти, вступившей в союз с королём Дикой Охоты (гл. 25). Саркастичная, обожает пиво и крабов. Десятилетиями скрывалась на Пустом острове, пока не выбрала Ребекку всадницей. Как побратим Ребекки участвует в Дикой Охоте.",
 quote:"Я выбрала тебя, потому что ты — моё отражение.",stats:{strength:85,magic:92,mind:80,loyalty:95}},
-{id:"darrok",name:"Даррок",full:"Даррок",role:"Дракон Шаяна",faction:"drakony",img:"images/darrok.jpg",
+
+{id:"darrok",name:"Даррок",full:"Даррок",role:"Дракон Шаяна",factions:["drakony"],img:"images/darrok.jpg",
 desc:"Дракон верховного баргата. В человеческом облике — короткие темно-красные волосы и шрам на лице (гл. 16). Мудрый и язвительный. Предупреждает Шаяна об опасности магии крови и помогает спасти Ребекку, делясь своим элементом (гл. 16).",
 quote:"Чувства всегда будут превыше нас, превыше долга.",stats:{strength:92,magic:90,mind:90,loyalty:95}},
-{id:"sana",name:"Санфрид",full:"Санфрид (Сана)",role:"Белая драконица Алакая",faction:"drakony",img:"images/sana.jpg",
+
+{id:"sana",name:"Санфрид",full:"Санфрид (Сана)",role:"Белая драконица Алакая",factions:["drakony"],img:"images/sana.jpg",
 desc:"Белоснежная драконица Алакая, смертоносная и грациозная (гл. 4). В человеческом облике — каре белоснежных волос, предпочитает белый цвет (гл. 31). Близкая подруга Ребекки, помогает принимать роды у Рунфрид (эпилог). Прямой речи в книге не имеет.",
 quote:"",stats:{strength:90,magic:88,mind:85,loyalty:95}},
-{id:"kayl",name:"Кайл Марриенсен",full:"Кайл Эйден Аксель Амайя Сколь Марриенсен",role:"Пожиратель, антагонист",faction:"marrien",img:"images/kayl.jpg",
+
+{id:"kayl",name:"Кайл Марриенсен",full:"Кайл Эйден Аксель Амайя Сколь Марриенсен",
+role:"Пожиратель, антагонист",factions:["marrien"],img:"images/kayl.jpg",
 desc:"Дядя Ребекки, второй сын Магнуса Марриенсена (гл. 15). Прозван Пожирателем за способность забирать чужие силы. Триста лет назад вместе с Клаусом наложил проклятие на Дворы и переместил Сумрачный Двор в измерение Света и Тени (гл. 25). Мечтал о власти над миром. Убит Ребеккой и Шаяном (гл. 29).",
 quote:"Ты моя противоположность. Мы будем править этим миром.",stats:{strength:88,magic:98,mind:95,loyalty:10}}
 ];
@@ -503,24 +525,29 @@ ROUTES.chars.after=()=>filterChars("all",document.querySelector(".filter-btn"));
 function filterChars(f,btn){
  document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
  if(btn)btn.classList.add("active");
- const list=f==="all"?CHARACTERS:CHARACTERS.filter(c=>c.faction===f);
+ const list=f==="all"?CHARACTERS:CHARACTERS.filter(c=>c.factions.includes(f));
  document.getElementById("charsGrid").innerHTML=list.map(c=>`
 <div class="char-card" onclick="openChar('${c.id}')">
 <div class="char-photo">
 <img src="${c.img}" alt="${c.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=&quot;ph&quot;>${c.name}</div>'">
-<span class="char-tag">${(FACTIONS.find(x=>x.id===c.faction)||{}).label||""}</span>
+<div class="char-tags">
+${c.factions.map(fid=>`<span class="char-tag">${(FACTIONS.find(x=>x.id===fid)||{}).label||""}</span>`).join("")}
+</div>
 </div>
 <div class="char-info"><h3>${c.name}</h3><div class="role">${c.role}</div></div>
 </div>`).join("");
 }
+
 function openChar(id){
  const c=CHARACTERS.find(x=>x.id===id);
+ const factionLabels=c.factions.map(fid=>(FACTIONS.find(x=>x.id===fid)||{}).label).filter(Boolean).join(" · ");
  document.getElementById("modalBox").innerHTML=`
 <button class="modal-close" onclick="closeModal()">×</button>
 <img class="modal-photo" src="${c.img}" alt="${c.name}" onerror="this.style.display='none'">
 <div class="modal-body">
 <h2>${c.name}</h2>
 <div class="modal-role">${c.role}${c.full&&c.full!==c.name?" · "+c.full:""}</div>
+<div class="modal-factions">${factionLabels}</div>
 <p>${c.desc}</p>
 ${c.quote?`<div class="modal-quote">«${c.quote}»</div>`:""}
 </div>`;
@@ -640,7 +667,7 @@ ROUTES.timeline.after=()=>{
  document.querySelectorAll(".tl").forEach(i=>obs.observe(i));
 };
 
-/* --- ТРЕКЕР с заметками и оценками --- */
+/* --- ТРЕКЕР --- */
 const TRACKER_KEY="pvt_tracker_v2";
 function getTracker(){
  try{return JSON.parse(localStorage.getItem(TRACKER_KEY)||"{}");}catch(e){return {};}
@@ -697,7 +724,6 @@ function setRate(i,key,n){
  if(!t[i].ratings)t[i].ratings={};
  t[i].ratings[key]=n;
  saveTracker(t);
- // обновим звёзды только у этого блока
  document.querySelectorAll(`.stars[data-i="${i}"][data-key="${key}"] .star`).forEach((s,idx)=>{
    s.classList.toggle("on",idx<n);
  });
