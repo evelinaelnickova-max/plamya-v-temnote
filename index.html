@@ -1,91 +1,736 @@
-/* ---------- ПЕРСОНАЖИ (только по тексту книги) ---------- */
-const CHARACTERS = [
-  {
-    id: "rebekka",
-    name: "Ребекка Амайя",
-    fullName: "Десма Лилиан Ребекка Амайя Хати Марриенсен",
-    role: "Всадница Руны, королева Дикой Охоты",
-    faction: "dikaya-ohota",
-    image: "images/rebekka.jpg",
-    desc: "Сирота-полукровка, дочь Кироса Марриенсена и смертной женщины. Выросла в бедности, с тринадцати лет прогуливала школу, а после смерти матери осталась с младшим братом Ромусом. Обуздала чёрную драконицу Руну на Пустом острове, чтобы попасть в Лармар и спасти брата. Пустая. После инициации стала королевой Дикой Охоты.",
-    quote: "Я не сомневаюсь в принятых решениях. Никогда.",
-    stats: { strength: 70, magic: 90, mind: 75, loyalty: 95 }
-  },
-  {
-    id: "shayan",
-    name: "Шаян Фархад",
-    fullName: "Шаян Араш Зияд Джан-Ияд Фархад",
-    role: "Верховный баргат, король Дикой Охоты",
-    faction: "dikaya-ohota",
-    image: "images/shayan.jpg",
-    desc: "Верховный баргат Шеррувии, комендант академии Лармар, глава ше’ру. Наследник Двора Дикой Охоты, брат погибшего короля. Триста лет назад был проклят Клаусом и Кайлом, заставлявшими его убивать свой народ. Огонь и кровь — его элементы. Истинная пара Ребекки.",
-    quote: "Ты моя одержимость.",
-    stats: { strength: 95, magic: 95, mind: 88, loyalty: 90 }
-  },
-  {
-    id: "runa",
-    name: "Рунфрид Дей’Кейн",
-    fullName: "Рунфрид Дей’Кейн (Руна)",
-    role: "Чёрная драконица, наследница Двора Драконов",
-    faction: "dvor-drakonov",
-    image: "images/runa.jpg",
-    desc: "Последняя наследница династии Чернозубых драконов Сумрачной равнины. Саркастичная, обожает пиво и крабов. Десятилетиями скрывалась на Пустом острове, пока не выбрала Ребекку своей всадницей. Дочь драконьей принцессы, племянница короля Драконов.",
-    quote: "Я выбрала тебя, потому что ты — моё отражение.",
-    stats: { strength: 85, magic: 92, mind: 80, loyalty: 95 }
-  },
-  {
-    id: "alakay",
-    name: "Алакай Йоль",
-    fullName: "Алакай Йоль (Кай)",
-    role: "Ше’ру, правая рука баргата",
-    faction: "she-ru",
-    image: "images/alakay.jpg",
-    desc: "Молчаливый ше’ру с севера, всадник белой драконицы Саны. Потерял младшую сестру, чей амулет носит как память. Именно он спасает Ребекку от Балара в коридоре, дарит ей амулет и становится её другом. Впоследствии женится на Рунфрид.",
-    quote: "Я полагаю, тебе здесь нужен друг, Ребекка.",
-    stats: { strength: 90, magic: 85, mind: 88, loyalty: 92 }
-  },
-  {
-    id: "romus",
-    name: "Ромус Шаалер",
-    fullName: "Ромус Акрам Галиб Данис Шаалер",
-    role: "Гарпия, Хранитель Шторма",
-    faction: "dikaya-ohota",
-    image: "images/romus.jpg",
-    desc: "Младший брат Ребекки по матери, сын помощника пекаря с севера. Хилый, вечно болеющий, но с блестящим умом. Оказался гарпией — древним существом, хранителем знаний. После инициации вырос на десять лет и обрёл крылья, рога и силу. Первый Хранитель Шторма.",
-    quote: "Ты никогда не была одна. Я всегда буду на твоей стороне.",
-    stats: { strength: 75, magic: 95, mind: 99, loyalty: 99 }
-  },
-  {
-    id: "kayl",
-    name: "Кайл Марриенсен",
-    fullName: "Кайл Эйден Аксель Амайя Сколь Марриенсен",
-    role: "Пожиратель, антагонист",
-    faction: "marrienseny",
-    image: "images/kayl.jpg",
-    desc: "Дядя Ребекки, второй сын Магнуса Марриенсена. Прозван Пожирателем за способность забирать чужие силы. Триста лет назад вместе с Клаусом наложил проклятие на Дворы и переместил Сумрачный Двор в измерение Света и Тени. Мечтал о власти над миром. Убит Ребеккой и Шаяном.",
-    quote: "Ты моя противоположность. Мы будем править этим миром.",
-    stats: { strength: 88, magic: 98, mind: 95, loyalty: 10 }
-  },
-  {
-    id: "darkrok",
-    name: "Даррок",
-    fullName: "Даррок",
-    role: "Дракон Шаяна",
-    faction: "dvor-drakonov",
-    image: "images/darkrok.jpg",
-    desc: "Дракон верховного баргата. В человеческом облике — короткие темно-красные волосы и шрам на лице. Мудрый и язвительный, именно он предупреждает Шаяна об опасности магии крови и помогает спасти Ребекку, делясь своим элементом.",
-    quote: "Чувства всегда будут превыше нас, превыше долга.",
-    stats: { strength: 92, magic: 90, mind: 90, loyalty: 95 }
-  },
-  {
-    id: "sana",
-    name: "Санфрид",
-    fullName: "Санфрид (Сана)",
-    role: "Белая драконица Алакая",
-    faction: "dvor-drakonov",
-    image: "images/sana.jpg",
-    desc: "Белоснежная драконица Алакая, смертоносная и грациозная. В человеческом облике — каре белоснежных волос, предпочитает белый цвет. Становится близкой подругой Ребекки и помогает принимать роды у Рунфрид.",
-    quote: "Мы с тобой одной крови. Одно и то же, начало и конец.",
-    stats: { strength: 90, magic: 88, mind: 85, loyalty: 95 }
-  }
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Пламя в темноте — сайт по книге</title>
+<style>
+:root{
+  --bg:#0d0b0f;--bg-soft:#16121a;--panel:#1d1722;--border:#3a2f44;
+  --gold:#d4a24e;--gold-soft:#e8c583;--fire:#e8622c;--blood:#a02836;
+  --text:#e8e0d8;--dim:#a89fae;--ok:#4caf7d;--radius:14px;
+  --shadow:0 10px 40px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);color:var(--text);font-family:"Segoe UI",Arial,sans-serif;
+  line-height:1.6;min-height:100vh;
+  background-image:radial-gradient(circle at 15% 10%,rgba(232,98,44,.08),transparent 45%),
+    radial-gradient(circle at 85% 90%,rgba(160,40,54,.10),transparent 45%);
+  background-attachment:fixed;
+}
+a{color:var(--gold-soft);text-decoration:none}
+a:hover{color:var(--gold)}
+h1,h2,h3{font-family:Georgia,serif;font-weight:normal;line-height:1.2}
+.container{width:min(1100px,92%);margin:0 auto}
+.nav{position:sticky;top:0;z-index:100;background:rgba(13,11,15,.94);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:.7rem 0;flex-wrap:wrap}
+.nav-logo{font-family:Georgia,serif;font-size:1.2rem;color:var(--gold);white-space:nowrap}
+.nav-logo span{color:var(--fire)}
+.nav-links{display:flex;gap:.15rem;flex-wrap:wrap;list-style:none}
+.nav-links a{display:block;padding:.4rem .6rem;border-radius:8px;
+  font-size:.86rem;color:var(--dim);transition:.2s;cursor:pointer}
+.nav-links a:hover{background:var(--panel);color:var(--gold-soft)}
+.nav-links a.active{background:var(--panel);color:var(--gold);box-shadow:inset 0 0 0 1px var(--border)}
+.nav-toggle{display:none;background:none;border:1px solid var(--border);
+  color:var(--gold);font-size:1.3rem;padding:.2rem .6rem;border-radius:8px;cursor:pointer}
+@media(max-width:900px){
+  .nav-toggle{display:block}
+  .nav-links{display:none;width:100%;flex-direction:column}
+  .nav-links.open{display:flex}
+}
+.section{padding:2.5rem 0}
+.section-title{font-size:clamp(1.6rem,4vw,2.3rem);color:var(--gold);
+  margin-bottom:.4rem;text-align:center}
+.section-sub{text-align:center;color:var(--dim);margin-bottom:1.8rem;
+  max-width:640px;margin-left:auto;margin-right:auto;font-size:.95rem}
+.panel{background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);padding:1.4rem}
+.btn{display:inline-block;background:linear-gradient(135deg,var(--fire),var(--blood));
+  color:#fff;border:none;padding:.7rem 1.4rem;border-radius:10px;font-size:1rem;
+  cursor:pointer;transition:.2s;font-family:inherit}
+.btn:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--border);color:var(--gold-soft)}
+.btn-ghost:hover{background:var(--bg-soft)}
+.hero{padding:4rem 0 3rem;text-align:center;position:relative;overflow:hidden}
+.hero-title{font-size:clamp(2.2rem,7vw,4rem);color:var(--gold);
+  text-shadow:0 0 40px rgba(232,98,44,.35);margin-bottom:.3rem}
+.hero-author{color:var(--dim);letter-spacing:3px;text-transform:uppercase;
+  font-size:.8rem;margin-bottom:1.6rem}
+.hero-cover{width:min(260px,65%);border-radius:var(--radius);
+  box-shadow:var(--shadow),0 0 60px rgba(232,98,44,.25);margin:0 auto 1.6rem;display:block;
+  background:var(--bg-soft);min-height:200px;object-fit:cover}
+.hero-ann{max-width:680px;margin:0 auto;font-style:italic;opacity:.92;font-size:.95rem}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.1rem}
+.feature-card{background:var(--panel);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.3rem;transition:.25s;cursor:pointer}
+.feature-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.feature-card h3{color:var(--gold-soft);margin-bottom:.35rem;font-size:1.1rem}
+.feature-card p{color:var(--dim);font-size:.9rem}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:1.6rem}
+.filter-btn{background:transparent;border:1px solid var(--border);color:var(--dim);
+  padding:.4rem 1rem;border-radius:999px;cursor:pointer;transition:.2s;font-size:.88rem;font-family:inherit}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold-soft)}
+.filter-btn.active{background:var(--gold);color:#1a1410;border-color:var(--gold);font-weight:600}
+.chars-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.2rem}
+.char-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  overflow:hidden;cursor:pointer;transition:.25s;position:relative}
+.char-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 14px 40px rgba(0,0,0,.6)}
+.char-photo{aspect-ratio:3/4;background:var(--bg-soft);display:flex;align-items:center;
+  justify-content:center;overflow:hidden;position:relative}
+.char-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.char-photo .ph{color:var(--dim);font-size:.8rem;text-align:center;padding:1rem}
+.char-tag{position:absolute;top:10px;left:10px;font-size:.68rem;text-transform:uppercase;
+  letter-spacing:1px;padding:.22rem .55rem;border-radius:999px;
+  background:rgba(13,11,15,.85);border:1px solid var(--border);color:var(--gold-soft)}
+.char-info{padding:.85rem 1rem 1rem}
+.char-info h3{color:var(--gold);font-size:1.1rem;margin-bottom:.15rem}
+.char-info .role{color:var(--dim);font-size:.8rem}
+.modal-overlay{position:fixed;inset:0;background:rgba(5,4,7,.82);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:1rem;z-index:200}
+.modal-overlay.open{display:flex}
+.modal{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);
+  max-width:620px;width:100%;max-height:88vh;overflow-y:auto;position:relative;box-shadow:var(--shadow)}
+.modal-close{position:absolute;top:10px;right:12px;background:rgba(13,11,15,.7);
+  border:1px solid var(--border);color:var(--gold);width:34px;height:34px;border-radius:50%;
+  font-size:1.2rem;cursor:pointer;line-height:1;z-index:2}
+.modal-close:hover{background:var(--blood);color:#fff}
+.modal-photo{width:100%;max-height:320px;object-fit:cover;display:block;background:var(--bg-soft)}
+.modal-body{padding:1.3rem 1.5rem 1.7rem}
+.modal-body h2{color:var(--gold);margin-bottom:.15rem}
+.modal-role{color:var(--dim);font-size:.88rem;margin-bottom:.9rem}
+.modal-body p{font-size:.94rem;margin-bottom:.7rem}
+.modal-quote{border-left:3px solid var(--fire);padding-left:.85rem;font-style:italic;
+  color:var(--gold-soft);margin-top:.9rem}
+.quiz-wrap{max-width:700px;margin:0 auto}
+.progress{height:8px;background:var(--bg-soft);border-radius:999px;overflow:hidden;margin-bottom:1.4rem}
+.progress-bar{height:100%;width:0;background:linear-gradient(90deg,var(--fire),var(--gold));transition:width .3s}
+.q-text{font-size:1.15rem;margin-bottom:1.1rem;font-family:Georgia,serif;color:var(--gold-soft)}
+.options{display:flex;flex-direction:column;gap:.65rem}
+.opt{text-align:left;background:var(--bg-soft);border:1px solid var(--border);
+  color:var(--text);padding:.85rem 1rem;border-radius:10px;cursor:pointer;
+  transition:.2s;font-size:.95rem;font-family:inherit}
+.opt:hover{border-color:var(--gold);background:var(--panel)}
+.opt.correct{border-color:var(--ok);background:rgba(76,175,125,.15)}
+.opt.wrong{border-color:var(--blood);background:rgba(160,40,54,.18)}
+.opt:disabled{cursor:default;opacity:.85}
+.q-result{text-align:center;padding:.8rem 0}
+.q-result h2{color:var(--gold);font-size:1.7rem;margin-bottom:.5rem}
+.q-result p{margin-bottom:.6rem}
+.q-quote{font-style:italic;color:var(--gold-soft);margin-top:.8rem}
+.q-actions{margin-top:1.3rem;text-align:center}
+.q-score{color:var(--dim);margin-top:.5rem}
+.q-feedback{margin-top:.7rem;font-size:.88rem;color:var(--dim);min-height:1.1em}
+.search{width:100%;max-width:520px;margin:0 auto 1.1rem;display:block;
+  background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;
+  padding:.75rem 1rem;color:var(--text);font-size:1rem;font-family:inherit}
+.search:focus{outline:none;border-color:var(--gold)}
+.glist{display:flex;flex-direction:column;gap:.6rem;max-width:820px;margin:0 auto}
+.gitem{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:.9rem 1.1rem}
+.gitem .term{color:var(--gold);font-weight:600}
+.gitem .cat{font-size:.68rem;text-transform:uppercase;letter-spacing:1px;
+  color:var(--dim);margin-left:.5rem}
+.gitem .def{font-size:.9rem;margin-top:.2rem}
+.nores{text-align:center;color:var(--dim);padding:2rem}
+.timeline{position:relative;max-width:740px;margin:0 auto;padding-left:1.4rem}
+.timeline::before{content:"";position:absolute;left:6px;top:0;bottom:0;width:2px;
+  background:linear-gradient(var(--fire),var(--gold),var(--blood))}
+.tl{position:relative;padding:0 0 1.8rem 1.4rem}
+.tl::before{content:"";position:absolute;left:-1.4rem;top:.5rem;width:14px;height:14px;
+  border-radius:50%;background:var(--bg);border:2px solid var(--gold);
+  box-shadow:0 0 0 4px rgba(212,162,78,.12);transition:.3s}
+.tl.active::before{background:var(--fire);border-color:var(--fire);
+  box-shadow:0 0 0 4px rgba(232,98,44,.25)}
+.tl-title{color:var(--gold-soft);font-family:Georgia,serif;font-size:1.1rem;margin-bottom:.25rem}
+.tl-text{color:var(--dim);font-size:.9rem}
+.chapters{display:flex;flex-direction:column;gap:.5rem;max-width:760px;margin:0 auto}
+.ch{display:flex;align-items:center;gap:.8rem;background:var(--panel);
+  border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;transition:.2s}
+.ch.done{border-color:var(--ok);background:rgba(76,175,125,.08)}
+.ch input{width:19px;height:19px;accent-color:var(--ok);cursor:pointer;flex-shrink:0}
+.ch label{flex:1;cursor:pointer;font-size:.94rem}
+.ch.done label{color:var(--dim);text-decoration:line-through}
+.tracker{max-width:520px;margin:1.3rem auto 1.8rem;text-align:center}
+.tbar{height:13px;background:var(--bg-soft);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+.tbar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--fire),var(--gold));transition:width .35s}
+.tcount{margin-top:.5rem;color:var(--dim);font-size:.88rem}
+.codex{max-width:720px;margin:0 auto;background:#1a1410;border:1px solid #4a3a24;
+  border-radius:var(--radius);padding:2.2rem 1.8rem;font-family:Georgia,serif;color:#c9bfa8;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.6),var(--shadow)}
+.codex h2{color:var(--gold);text-align:center;margin-bottom:1.3rem;letter-spacing:1px}
+.codex p{font-size:1.05rem;line-height:1.9;margin-bottom:.9rem}
+.ink{color:transparent;border-bottom:1px dashed rgba(201,191,168,.25);
+  transition:.5s;cursor:pointer}
+.ink:hover,.ink.on{color:#e8c583;text-shadow:0 0 12px rgba(232,197,131,.5);border-bottom-color:transparent}
+.codex-hint{text-align:center;color:var(--dim);font-size:.83rem;margin-top:1.2rem;font-family:"Segoe UI",sans-serif}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.2rem}
+.dcard{background:linear-gradient(160deg,#201a26,#17121c);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.3rem;position:relative;box-shadow:var(--shadow)}
+.dcard::before{content:"ШЕ’РУ";position:absolute;top:12px;right:14px;font-size:.66rem;
+  letter-spacing:3px;color:rgba(212,162,78,.35);border:1px solid rgba(212,162,78,.25);
+  padding:.12rem .45rem;border-radius:4px}
+.dcard h3{color:var(--gold);font-size:1.2rem;margin-bottom:.15rem}
+.dcard .sub{color:var(--dim);font-size:.82rem;margin-bottom:.9rem}
+.stats{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.9rem}
+.stat{font-size:.82rem}
+.stat-l{display:flex;justify-content:space-between;color:var(--dim);margin-bottom:.15rem}
+.stat-b{height:7px;background:var(--bg-soft);border-radius:999px;overflow:hidden}
+.stat-f{height:100%;background:linear-gradient(90deg,var(--fire),var(--gold));width:0;transition:width .7s}
+.dcard .desc{font-size:.88rem}
+.eggs{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.1rem}
+.egg{background:var(--panel);border:1px dashed var(--border);border-radius:var(--radius);
+  padding:1.2rem;cursor:pointer;transition:.25s;min-height:120px}
+.egg:hover{border-color:var(--gold)}
+.egg h3{color:var(--gold-soft);font-size:1rem;margin-bottom:.25rem}
+.egg p{color:var(--dim);font-size:.85rem}
+.egg .back{display:none}
+.egg.open{border-style:solid;border-color:var(--gold)}
+.egg.open .front{display:none}
+.egg.open .back{display:block;animation:fade .4s}
+.egg.open .back p{color:var(--text);font-size:.9rem}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.footer{border-top:1px solid var(--border);padding:1.8rem 0;text-align:center;
+  color:var(--dim);font-size:.82rem;margin-top:2.5rem}
+.footer .quote{font-family:Georgia,serif;color:var(--gold-soft);margin-bottom:.3rem}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="nav-logo">Пламя <span>в темноте</span></div>
+    <button class="nav-toggle" onclick="document.getElementById('nl').classList.toggle('open')">☰</button>
+    <ul class="nav-links" id="nl"></ul>
+  </div>
+</nav>
+
+<main id="app"></main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="quote">«Лавер Раверсин. Шаал Де Лавер.»</div>
+    <div>Фан-сайт по книге Тани Нордсвей «Пламя в темноте». Все тексты принадлежат автору.</div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBox"></div>
+</div>
+
+<script>
+/* ============================================================
+   ДАННЫЕ — всё по тексту книги
+   ============================================================ */
+
+const CHARACTERS=[
+ {id:"rebekka",name:"Ребекка Амайя",full:"Десма Лилиан Ребекка Амайя Хати Марриенсен",
+  role:"Всадница Руны, королева Дикой Охоты",faction:"dikaya",img:"images/rebekka.jpg",
+  desc:"Сирота-полукровка, дочь Кироса Марриенсена и смертной женщины (гл. 15). С тринадцати лет прогуливала школу (гл. 9). После смерти матери осталась с младшим братом Ромусом. Обуздала чёрную драконицу Руну на Пустом острове, чтобы попасть в Лармар и спасти брата. Пустая. После инициации стала королевой Дикой Охоты.",
+  quote:"Я не сомневаюсь в принятых решениях. Никогда.",
+  stats:{strength:70,magic:90,mind:75,loyalty:95}},
+ {id:"shayan",name:"Шаян Фархад",full:"Шаян Араш Зияд Джан-Ияд Фархад",
+  role:"Верховный баргат, король Дикой Охоты",faction:"dikaya",img:"images/shayan.jpg",
+  desc:"Верховный баргат Шеррувии, комендант академии Лармар, глава ше’ру. Наследник Двора Дикой Охоты, брат погибшего короля (гл. 25). Триста лет назад проклят Клаусом и Кайлом, заставлявшими его убивать свой народ. Огонь и кровь — его элементы. Истинная пара Ребекки. Второе имя — Араш.",
+  quote:"Ты моя одержимость.",
+  stats:{strength:95,magic:95,mind:88,loyalty:90}},
+ {id:"runa",name:"Рунфрид Дей’Кейн",full:"Рунфрид Дей’Кейн (Руна)",
+  role:"Чёрная драконица, наследница Двора Драконов",faction:"drakony",img:"images/runa.jpg",
+  desc:"Последняя наследница династии Чернозубых драконов Сумрачной равнины, наследница драконьего престола (гл. 16, 25). Племянница драконьей принцессы, родной тёти, вступившей в союз с королём Дикой Охоты (гл. 25). Саркастичная, обожает пиво и крабов. Десятилетиями скрывалась на Пустом острове, пока не выбрала Ребекку всадницей.",
+  quote:"Я выбрала тебя, потому что ты — моё отражение.",
+  stats:{strength:85,magic:92,mind:80,loyalty:95}},
+ {id:"alakay",name:"Алакай Йоль",full:"Алакай Йоль (Кай)",
+  role:"Ше’ру, правая рука баргата",faction:"sheru",img:"images/alakay.jpg",
+  desc:"Молчаливый ше’ру с севера, всадник белой драконицы Саны. Потерял младшую сестру, чей амулет носит как память (гл. 12, 18). Спасает Ребекку от Балара, дарит ей амулет и становится её другом. Впоследствии женится на Рунфрид (гл. 31).",
+  quote:"Я полагаю, тебе здесь нужен друг, Ребекка.",
+  stats:{strength:90,magic:85,mind:88,loyalty:92}},
+ {id:"romus",name:"Ромус Шаалер",full:"Ромус Акрам Галиб Данис Шаалер",
+  role:"Гарпия, Хранитель Шторма",faction:"dikaya",img:"images/romus.jpg",
+  desc:"Младший брат Ребекки по матери, сын помощника пекаря с севера (гл. 9). Хилый, вечно болеющий, но с блестящим умом. Оказался гарпией — древним существом, хранителем знаний (гл. 25). После инициации вырос на десять лет и обрёл крылья, рога и силу (гл. 26). Первый Хранитель Шторма (эпилог).",
+  quote:"Ты никогда не была одна. Я всегда буду на твоей стороне.",
+  stats:{strength:75,magic:95,mind:99,loyalty:99}},
+ {id:"kayl",name:"Кайл Марриенсен",full:"Кайл Эйден Аксель Амайя Сколь Марриенсен",
+  role:"Пожиратель, антагонист",faction:"marrien",img:"images/kayl.jpg",
+  desc:"Дядя Ребекки, второй сын Магнуса Марриенсена (гл. 15). Прозван Пожирателем за способность забирать чужие силы. Триста лет назад вместе с Клаусом наложил проклятие на Дворы и переместил Сумрачный Двор в измерение Света и Тени (гл. 25). Мечтал о власти над миром. Убит Ребеккой и Шаяном (гл. 29).",
+  quote:"Ты моя противоположность. Мы будем править этим миром.",
+  stats:{strength:88,magic:98,mind:95,loyalty:10}},
+ {id:"darrok",name:"Даррок",full:"Даррок",
+  role:"Дракон Шаяна",faction:"drakony",img:"images/darrok.jpg",
+  desc:"Дракон верховного баргата. В человеческом облике — короткие темно-красные волосы и шрам на лице (гл. 16). Мудрый и язвительный. Предупреждает Шаяна об опасности магии крови и помогает спасти Ребекку, делясь своим элементом (гл. 16).",
+  quote:"Чувства всегда будут превыше нас, превыше долга.",
+  stats:{strength:92,magic:90,mind:90,loyalty:95}},
+ {id:"sana",name:"Санфрид",full:"Санфрид (Сана)",
+  role:"Белая драконица Алакая",faction:"drakony",img:"images/sana.jpg",
+  desc:"Белоснежная драконица Алакая, смертоносная и грациозная (гл. 4). В человеческом облике — каре белоснежных волос, предпочитает белый цвет (гл. 31). Близкая подруга Ребекки, помогает принимать роды у Рунфрид (эпилог). Прямой речи в книге не имеет.",
+  quote:"",stats:{strength:90,magic:88,mind:85,loyalty:95}}
 ];
+const FACTIONS=[{id:"all",label:"Все"},{id:"dikaya",label:"Дикая Охота"},
+ {id:"drakony",label:"Двор Драконов"},{id:"sheru",label:"Ше’ру"},{id:"marrien",label:"Марриенсены"}];
+
+const QUIZ_WHO={
+ questions:[
+  {q:"Что для тебя важнее всего?",o:[["Семья и близкие","empty"],["Свобода и полёт","dragon"],["Знания и истина","harpy"],["Сила и справедливость","flame"]]},
+  {q:"Как ты ведёшь себя в опасности?",o:[["Бросаюсь в бой","flame"],["Планирую и хитрю","harpy"],["Полагаюсь на интуицию","empty"],["Уклоняюсь и улетаю","dragon"]]},
+  {q:"Твой идеальный вечер?",o:[["Костёр и разговоры с близкими","empty"],["Пиво и крабы в хорошей компании","dragon"],["Книга и тишина","harpy"],["Тренировка до пота","flame"]]},
+  {q:"Что ты ценишь в других?",o:[["Верность","empty"],["Острый ум","harpy"],["Свободолюбие","dragon"],["Силу духа","flame"]]},
+  {q:"Твой главный страх?",o:[["Потерять близких","empty"],["Быть связанным, в клетке","dragon"],["Невежество","harpy"],["Бессилие","flame"]]},
+  {q:"Какой элемент тебе ближе?",o:[["Огонь","flame"],["Луна и пустота","empty"],["Ветер и лёд","dragon"],["Молния и шторм","harpy"]]},
+  {q:"Что бы ты выбрал(а), будь возможность?",o:[["Стать королевой или королём","flame"],["Обрести истинную пару","empty"],["Свободно летать","dragon"],["Разгадать все тайны мира","harpy"]]}
+ ],
+ results:{
+  flame:{title:"Ты — Пламя",char:"Шаян Фархад",text:"Огонь и кровь. Ты несёшь справедливость, даже если она обжигает. В тебе живёт одержимость, способная сжечь дотла — или осветить путь в темноте.",quote:"Ты моя одержимость."},
+  empty:{title:"Ты — Пустая",char:"Ребекка Амайя",text:"Твоя сила — принимать любую форму. Ты дерзкая, импульсивная и готова на всё ради близких. В твоей душе горит пламя, которое не погасить.",quote:"Я не сомневаюсь в принятых решениях. Никогда."},
+  dragon:{title:"Ты — Дракон",char:"Рунфрид Дей’Кейн",text:"Свобода, сарказм и верность. Ты не терпишь клеток и цепей, но за побратима пойдёшь в огонь и воду. И обязательно прихватишь бочонок пива.",quote:"Я выбрала тебя, потому что ты — моё отражение."},
+  harpy:{title:"Ты — Гарпия",char:"Ромус Шаалер",text:"Ум, знания и шторм. Ты хранитель истины, и твоё оружие острее любого клинка. Ты всегда будешь на стороне тех, кого любишь.",quote:"Ты никогда не была одна. Я всегда буду на твоей стороне."}
+ }
+};
+
+const QUIZ_QUOTES=[
+ {q:"Ты моя одержимость.",o:["Шаян","Кайл","Алакай","Ромус"],c:0,n:"Гл. 20. Шаян — Ребекке."},
+ {q:"Я полагаю, тебе здесь нужен друг, Ребекка.",o:["Алакай","Шаян","Даррок","Гаяр"],c:0,n:"Гл. 18. Алакай дарит Ребекке амулет."},
+ {q:"Ты моя противоположность. Мы будем править этим миром.",o:["Кайл","Шаян","Клаус","Даррок"],c:0,n:"Гл. 14. Кайл — Ребекке."},
+ {q:"Я выбрала тебя, потому что ты — моё отражение.",o:["Руна","Сана","Ребекка","Санфрид"],c:0,n:"Гл. 26. Руна — Ребекке во время инициации."},
+ {q:"Ты никогда не была одна. Я всегда буду на твоей стороне.",o:["Ромус","Шаян","Алакай","Кайл"],c:0,n:"Гл. 14. Ромус — Ребекке в библиотеке."},
+ {q:"Чувства всегда будут превыше нас, превыше долга.",o:["Даррок","Шаян","Алакай","Гаяр"],c:0,n:"Гл. 16. Даррок — Шаяну."},
+ {q:"Я не сомневаюсь в принятых решениях. Никогда.",o:["Ребекка","Шаян","Руна","Алакай"],c:0,n:"Гл. 26. Ребекка перед инициацией."},
+ {q:"Я понимаю твою боль. И ни за что не хотел бы разделить подобное со своей младшей сестрой.",o:["Алакай","Шаян","Ромус","Даррок"],c:0,n:"Гл. 4. Алакай — Ребекке."},
+ {q:"Да начнется Дикая Охота!",o:["Шаян","Кайл","Даррок","Гаяр"],c:0,n:"Гл. 29. Шаян после принятия перстня."},
+ {q:"Правосудие? В народе нас называют палачами.",o:["Шаян","Кайл","Алакай","Даррок"],c:0,n:"Гл. 4. Шаян — Ребекке в кабинете."}
+];
+
+const GLOSSARY=[
+ {t:"Ше’ру",c:"Титулы",d:"Элитные драконьи всадники императора, лучшие выпускники Лармара. На древнем языке — «связанные сердцем, долгом и честью». На самом деле — проклятые фейри Двора Дикой Охоты."},
+ {t:"Баргат",c:"Титулы",d:"Высший военный чин империи Шеррувии, несущий волю императора. Верховный баргат — глава ше’ру."},
+ {t:"Шерравет",c:"Титулы",d:"На шеррувимском наречии — незамужняя девушка."},
+ {t:"Аэрукет",c:"Расы",d:"Женщина-потомок фейри Сумрачного Двора (шеррувимское наречие). В древнем значении — якорь гарпии, её защитник до инициации."},
+ {t:"Аэрукан",c:"Расы",d:"Мужчина-потомок фейри Сумрачного Двора (шеррувимское наречие)."},
+ {t:"Гарпия",c:"Расы",d:"Древнее существо, хранитель знаний. Рождается с рогами, хвостом и крыльями, но к утру становится обычным ребёнком. Отличается невероятным умом и слабым здоровьем. Без инициации может взорваться, уничтожив всё в радиусе сотни миль."},
+ {t:"Пустая",c:"Магия",d:"Носитель пустой магии, которая может принимать любую форму. Сила рода Марриенсенов. Обладатели: Магнус, Асхейд, Герхард, Кирос, Кайл, Ребекка."},
+ {t:"Пожиратель",c:"Магия",d:"Прозвище Кайла Марриенсена. Обладает даром забирать чужие способности."},
+ {t:"Сколь и Хати",c:"Магия",d:"Два саблезубых волка из легенды: Сколь гонится за солнцем, Хати — за луной. Когда один достигнет цели, наступит Великая ночь. Кайл — Сколь, Ребекка — Хати."},
+ {t:"Великая ночь",c:"Магия",d:"Событие из пророчества: когда один из волков поглотит своё светило, мир погрузится во тьму. Предотвращена Ребеккой и Шаяном."},
+ {t:"Дикая Охота",c:"Магия",d:"Древний ритуал Двора, во время которого всадники очищают мир от злодеев. Проведена Ребеккой и Шаяном в финале."},
+ {t:"Тер Ле’кмер",c:"Магия",d:"«Единение мыслей» (язык континента). Ментальные узы всех ше’ру. Вторая татуировка на ладони, отличающая элитного всадника от обычного."},
+ {t:"Лареева трава",c:"Артефакты",d:"Редкий яд. По одной капле в день — сердечный приступ через неделю. Семь капель — мгновенная смерть."},
+ {t:"Покрица",c:"Артефакты",d:"Ядовитая трава, из которой изготавливают отравляющие мази, настойки и порошки. При высокой концентрации смерть наступает за минуты."},
+ {t:"Перстень души",c:"Артефакты",d:"Кольцо с тёмно-фиолетовым камнем, внутри которого пляшет пламя. С ним короли Дикой Охоты восходили на престол и преподносили возлюбленным, делая предложение."},
+ {t:"Таларии",c:"Артефакты",d:"Волшебные сапоги с маленькими крылышками из упавшей звезды. Подарок Кироса Ребекке. Позволяют подниматься в воздух без дракона."},
+ {t:"Рассекатель ветра",c:"Артефакты",d:"Приспособление на лбу всадника, упрощающее видимость на большой высоте."},
+ {t:"Сумрачный Двор",c:"Места",d:"Объединённая столица Дворов Драконов и Дикой Охоты. Триста лет назад перемещён в измерение Света и Тени Клаусом и Кайлом. Восстановлен в финале."},
+ {t:"Лармар",c:"Места",d:"Академия драконьих всадников, последняя надежда империи. Замок окружён тремя полосами препятствий — «кругами ада»."},
+ {t:"Драконий хребет",c:"Места",d:"Горный хребет на Пустом острове, где скрывалась Руна."},
+ {t:"Пустой остров",c:"Места",d:"Остров в Мёртвом море, куда ссылали самых ужасных преступников империи. Здесь Ребекка нашла Руну."},
+ {t:"Ивлир",c:"Места",d:"Город, где произошла первая встреча Ребекки и Шаяна на публичной казни мятежников."},
+ {t:"Зафри",c:"Места",d:"Родной город Ребекки, сожжённый драконами пару лет назад."},
+ {t:"Клаус Хартвигсен",c:"Персонажи",d:"Император Шеррувии, захвативший власть с помощью Кайла. Наложил на Дворы проклятие подчинения. Убит во время Дикой Охоты."},
+ {t:"Кирос Марриенсен",c:"Персонажи",d:"Кузнец Времени, отец Ребекки, первый сын Магнуса. Переместил Ребекку и её мать на триста лет вперёд, чтобы спасти. Сделал Ребекке таларии."},
+ {t:"Магнус Марриенсен",c:"Персонажи",d:"Первый пустой, прозванный Гибельным. Владыка Чёрных пустошей, представитель Первой крови."},
+ {t:"Николаус Марриенсен",c:"Персонажи",d:"Летописец, он же Терриус Ларрсон, он же Бреннан, он же Лютый. Аэрукан и гарпия, которому открыты прошлое и будущее."}
+];
+
+const TIMELINE=[
+ {t:"Площадь в Ивлире",d:"Ребекка впервые видит верховного баргата Шаяна на публичной казни мятежников. Их взгляды встречаются."},
+ {t:"Пустой остров",d:"Ребекка взбирается на Драконий хребет и обуздывает чёрную драконицу Руну, заключив с ней связь."},
+ {t:"Лармар",d:"Ребекка является в академию верхом на драконе. Шаян даёт ей испытательный срок в месяц и берёт в ученицы."},
+ {t:"Тренировки",d:"Полоса препятствий, рукопашные бои, полёты. Ребекка побеждает кадетов старших курсов и завоёвывает уважение."},
+ {t:"Пробуждение магии",d:"Ночью просыпается пустая магия Ребекки. Шаян проводит ночь у её двери, борясь с наваждением."},
+ {t:"Бал",d:"Ребекка является в бордовом платье. Танец с Шаяном, первый поцелуй, признание."},
+ {t:"Покушение Балара",d:"Балар Райланд душит Ребекку и травит её покрицей. Шаян спасает её, используя магию крови."},
+ {t:"Инициация",d:"Ромус оказывается гарпией. Брат и сестра проходят инициацию одновременно: падение с небес и обретение силы."},
+ {t:"Сумрачный Двор",d:"Кайл похищает Ребекку и Руну. Битва у алтарей. Ребекка вырывает сердце Кайла, Шаян отрывает ему голову."},
+ {t:"Дикая Охота",d:"Ребекка принимает перстень души. Шаян провозглашает Охоту. Клаус убит, Сумрачный Двор восстановлен."},
+ {t:"Эпилог",d:"Свадьба, рождение сына Дориана, объединение Дворов. Николаус завершает летопись."}
+];
+
+const CHAPTERS=["1. Площадь в Ивлире","2. Пустой остров","3. Связь с Руной","4. Лармар","5. Первый урок","6. Тренировка","7. Полоса препятствий","8. Ночь у двери","9. Утро после","10. Разговор с Шаяном","11. Первое испытание","12. Седло всадника","13. Откровение","14. Библиотека","15. Летопись","16. Сумрачный Двор","17. Возвращение","18. Друг","19. Бал","20. Башня","21. Утро","22. Признание","23. Пробуждение","24. Септа","25. Правда о гарпии","26. Инициация","27. Пропажа","28. Алтарь","29. Битва","30. Выбор","31. Королева","Эпилог"];
+
+const DOSSIER=[
+ {n:"Шаян Фархад",s:"Верховный баргат",st:{Сила:95,Магия:95,Разум:88,Верность:90},d:"Огонь и кровь. Наследник Двора Дикой Охоты. Проклят триста лет назад."},
+ {n:"Алакай Йоль",s:"Ше’ру",st:{Сила:90,Магия:85,Разум:88,Верность:92},d:"Лёд и кровь. Потерял сестру, носит её амулет. Правая рука баргата."},
+ {n:"Гаяр",s:"Ше’ру",st:{Сила:88,Магия:80,Разум:75,Верность:85},d:"Дерзкий сердцеед, любитель борделей. Блестящий мечник."},
+ {n:"Яфис",s:"Ше’ру",st:{Сила:85,Магия:82,Разум:86,Верность:88},d:"Спокойный и рассудительный. Коротко стриженные русые волосы."},
+ {n:"Касид",s:"Ше’ру",st:{Сила:84,Магия:83,Разум:80,Верность:85},d:"Золотистые глаза. Держится рядом с Яфисом."},
+ {n:"Данис",s:"Ше’ру",st:{Сила:86,Магия:81,Разум:78,Верность:84},d:"Тёмный ёжик волос, фиолетовый камень на груди."}
+];
+
+const CODEX=[
+ "Лишь тот, кто рожден сумраком, сможет прочесть эту книгу.",
+ "Двенадцать миров показал Шаале Вальгарду, когда открыл ему дверь в мир Света и Тени.",
+ "Тот, кто приходил с миром, получал дар. А кто со сталью — выходил пустой.",
+ "Я — лишь девятый в этом роду дома Марриенсен, но всего нас будет двенадцать.",
+ "Последнему пустому будет суждено стать Началом Великого Конца.",
+ "Хати и Сколь, Волк Луны и Волк Солнца, проглотят светила, и день оборвется.",
+ "Если один второго погубит скорей, чем часы вечности коснутся морей, то оба погибнуть должны.",
+ "Но если в ночь алтарь пробудят они, то порталы замкнут тогда изнутри."
+];
+
+const EGGS=[
+ {f:"Три имени одного",b:"В эпилоге раскрывается: Николаус Марриенсен — это и Терриус Ларрсон (автор книги о двенадцати пустых), и Бреннан (наставник Шаяна), и Лютый (наставник Ребекки). Один аэрукан-гарпия, которому открыто прошлое и будущее."},
+ {f:"Ксанферон",b:"В эпилоге сказано: поднявшийся из воды континент нарекут Ксанфероном. Николаус знает это заранее."},
+ {f:"Меделин",b:"Николаус упоминает Меделин, «дочь двух лжебогов Хаоса», и ждёт встречи с ней. Это отсылка к дилогии «Узники мира снов» и «Монстры царства стали»."},
+ {f:"Двенадцать пустых",b:"Книга Николауса называется «Двенадцать пустых». В ней перечислены все носители пустой магии рода Марриенсен, включая Ребекку — двенадцатую."},
+ {f:"Сколь и Хати",b:"Имена из легенды о двух волках. Кайл называет себя Сколь, а Ребекку — Хати. В пророчестве Николауса они — Волк Солнца и Волк Луны."},
+ {f:"Сумрачный Двор",b:"В тексте прямо сказано: никакого Талласа и Шеррувии не существовало. Были два Двора — Драконов и Дикой Охоты, а Сумрачный Двор — их объединённая столица."}
+];
+
+/* ============================================================
+   РОУТЕР И НАВИГАЦИЯ
+   ============================================================ */
+const PAGES=[
+ {id:"home",label:"Главная"},
+ {id:"chars",label:"Персонажи"},
+ {id:"who",label:"Кто ты?"},
+ {id:"quotes",label:"Цитаты"},
+ {id:"gloss",label:"Словарь"},
+ {id:"timeline",label:"Таймлайн"},
+ {id:"tracker",label:"Чтение"},
+ {id:"codex",label:"Кодекс"},
+ {id:"dossier",label:"Досье"},
+ {id:"eggs",label:"Пасхалки"}
+];
+
+function buildNav(){
+ const ul=document.getElementById("nl");
+ ul.innerHTML=PAGES.map(p=>`<li><a data-page="${p.id}" onclick="go('${p.id}')">${p.label}</a></li>`).join("");
+}
+
+function go(id){
+ location.hash=id;
+}
+
+function render(){
+ const id=(location.hash||"#home").slice(1)||"home";
+ document.querySelectorAll(".nav-links a").forEach(a=>{
+   a.classList.toggle("active",a.dataset.page===id);
+ });
+ document.getElementById("nl").classList.remove("open");
+ const app=document.getElementById("app");
+ const fn=ROUTES[id]||ROUTES.home;
+ app.innerHTML=fn();
+ if(fn.after)fn.after();
+ window.scrollTo(0,0);
+}
+
+window.addEventListener("hashchange",render);
+
+/* ============================================================
+   СТРАНИЦЫ
+   ============================================================ */
+const ROUTES={};
+
+/* --- Главная --- */
+ROUTES.home=()=>`
+<section class="hero"><div class="container">
+  <h1 class="hero-title">Пламя в темноте</h1>
+  <div class="hero-author">Таня Нордсвей</div>
+  <img class="hero-cover" src="images/cover.jpg" alt="Обложка"
+    onerror="this.style.display='none'">
+  <p class="hero-ann">Он Шаян, властный комендант академии Лармар, жестокий глава элитных драконьих всадников ше’ру. Я Ребекка, сирота-полукровка — таких он казнит без промедления. Но страх не заставит меня отступить. Я овладею самым строптивым драконом и пройду в академию ради спасения младшего брата, который и года не протянет без меня.</p>
+</div></section>
+<section class="section"><div class="container">
+  <h2 class="section-title">Разделы</h2>
+  <p class="section-sub">Персонажи, тесты, словарь, таймлайн, кодекс и пасхалки — всё по тексту книги.</p>
+  <div class="feature-grid">
+    ${PAGES.filter(p=>p.id!=="home").map(p=>`
+      <div class="feature-card" onclick="go('${p.id}')">
+        <h3>${p.label}</h3>
+        <p>${DESCR[p.id]||""}</p>
+      </div>`).join("")}
+  </div>
+</div></section>`;
+
+const DESCR={
+ chars:"Карточки героев с описаниями, цитатами и статистикой.",
+ who:"Тест из семи вопросов: чьё пламя горит в твоей душе?",
+ quotes:"Викторина: угадай, кому принадлежит цитата.",
+ gloss:"Термины книги с живым поиском.",
+ timeline:"Ключевые события от Ивлира до Дикой Охоты.",
+ tracker:"Отмечай прочитанные главы, прогресс сохраняется.",
+ codex:"Книга с исчезающими чернилами — как у Руны.",
+ dossier:"Досье ше’ру: статы и краткие характеристики.",
+ eggs:"Скрытые отсылки и кроссоверы."
+};
+
+/* --- Персонажи --- */
+ROUTES.chars=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Персонажи</h2>
+  <p class="section-sub">Нажми на карточку, чтобы открыть досье.</p>
+  <div class="filters">
+    ${FACTIONS.map((f,i)=>`<button class="filter-btn ${i===0?'active':''}" data-f="${f.id}" onclick="filterChars('${f.id}',this)">${f.label}</button>`).join("")}
+  </div>
+  <div class="chars-grid" id="charsGrid"></div>
+</div></section>`;
+ROUTES.chars.after=()=>{filterChars("all",document.querySelector(".filter-btn"));};
+
+function filterChars(f,btn){
+ document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ const list=f==="all"?CHARACTERS:CHARACTERS.filter(c=>c.faction===f);
+ document.getElementById("charsGrid").innerHTML=list.map(c=>`
+  <div class="char-card" onclick="openChar('${c.id}')">
+    <div class="char-photo">
+      <img src="${c.img}" alt="${c.name}" onerror="this.style.display='none';this.parentNode.innerHTML='<div class=&quot;ph&quot;>${c.name}</div>'">
+      <span class="char-tag">${(FACTIONS.find(x=>x.id===c.faction)||{}).label||""}</span>
+    </div>
+    <div class="char-info">
+      <h3>${c.name}</h3>
+      <div class="role">${c.role}</div>
+    </div>
+  </div>`).join("");
+}
+
+function openChar(id){
+ const c=CHARACTERS.find(x=>x.id===id);
+ document.getElementById("modalBox").innerHTML=`
+  <button class="modal-close" onclick="closeModal()">×</button>
+  <img class="modal-photo" src="${c.img}" alt="${c.name}" onerror="this.style.display='none'">
+  <div class="modal-body">
+    <h2>${c.name}</h2>
+    <div class="modal-role">${c.role}${c.full&&c.full!==c.name?" · "+c.full:""}</div>
+    <p>${c.desc}</p>
+    ${c.quote?`<div class="modal-quote">«${c.quote}»</div>`:""}
+  </div>`;
+ document.getElementById("modal").classList.add("open");
+}
+function closeModal(){document.getElementById("modal").classList.remove("open");}
+
+/* --- Тест «Кто ты» --- */
+let whoState={i:0,score:{flame:0,empty:0,dragon:0,harpy:0}};
+ROUTES.who=()=>{
+ whoState={i:0,score:{flame:0,empty:0,dragon:0,harpy:0}};
+ return `<section class="section"><div class="container">
+  <h2 class="section-title">Кто ты из мира Лармара?</h2>
+  <p class="section-sub">Семь вопросов — и узнаешь, чьё пламя горит в твоей душе.</p>
+  <div class="quiz-wrap panel" id="whoBox"></div>
+ </div></section>`;
+};
+ROUTES.who.after=()=>renderWho();
+
+function renderWho(){
+ const box=document.getElementById("whoBox");
+ const q=QUIZ_WHO.questions[whoState.i];
+ box.innerHTML=`
+  <div class="progress"><div class="progress-bar" style="width:${whoState.i/QUIZ_WHO.questions.length*100}%"></div></div>
+  <div class="q-text">${whoState.i+1}. ${q.q}</div>
+  <div class="options">
+    ${q.o.map((o,i)=>`<button class="opt" onclick="whoPick(${i})">${o[0]}</button>`).join("")}
+  </div>`;
+}
+function whoPick(i){
+ const q=QUIZ_WHO.questions[whoState.i];
+ whoState.score[q.o[i][1]]++;
+ whoState.i++;
+ if(whoState.i<QUIZ_WHO.questions.length){renderWho();}
+ else{
+   const key=Object.keys(whoState.score).sort((a,b)=>whoState.score[b]-whoState.score[a])[0];
+   const r=QUIZ_WHO.results[key];
+   document.getElementById("whoBox").innerHTML=`
+    <div class="q-result">
+      <h2>${r.title}</h2>
+      <p><b>Твой герой:</b> ${r.char}</p>
+      <p>${r.text}</p>
+      <div class="q-quote">«${r.quote}»</div>
+      <div class="q-actions"><button class="btn" onclick="restartWho()">Пройти заново</button></div>
+    </div>`;
+ }
+}
+function restartWho(){whoState={i:0,score:{flame:0,empty:0,dragon:0,harpy:0}};renderWho();}
+
+/* --- Викторина цитат --- */
+let qqState={i:0,score:0};
+ROUTES.quotes=()=>{
+ qqState={i:0,score:0};
+ return `<section class="section"><div class="container">
+  <h2 class="section-title">Угадай, кто сказал</h2>
+  <p class="section-sub">Десять цитат из книги. Выбери, кому они принадлежат.</p>
+  <div class="quiz-wrap panel" id="qqBox"></div>
+ </div></section>`;
+};
+ROUTES.quotes.after=()=>renderQQ();
+
+function renderQQ(){
+ const box=document.getElementById("qqBox");
+ if(qqState.i>=QUIZ_QUOTES.length){
+   box.innerHTML=`<div class="q-result">
+     <h2>Результат</h2>
+     <p>Ты угадал(а) <b>${qqState.score}</b> из ${QUIZ_QUOTES.length}.</p>
+     <div class="q-actions"><button class="btn" onclick="restartQQ()">Пройти заново</button></div>
+   </div>`;
+   return;
+ }
+ const q=QUIZ_QUOTES[qqState.i];
+ box.innerHTML=`
+  <div class="progress"><div class="progress-bar" style="width:${qqState.i/QUIZ_QUOTES.length*100}%"></div></div>
+  <div class="q-text">«${q.q}»</div>
+  <div class="options">
+    ${q.o.map((o,i)=>`<button class="opt" onclick="qqPick(${i},this)">${o}</button>`).join("")}
+  </div>
+  <div class="q-feedback" id="qqFb"></div>`;
+}
+function qqPick(i,btn){
+ const q=QUIZ_QUOTES[qqState.i];
+ const opts=document.querySelectorAll("#qqBox .opt");
+ opts.forEach(o=>o.disabled=true);
+ if(i===q.c){btn.classList.add("correct");qqState.score++;}
+ else{btn.classList.add("wrong");opts[q.c].classList.add("correct");}
+ document.getElementById("qqFb").textContent=q.n;
+ setTimeout(()=>{qqState.i++;renderQQ();},1100);
+}
+function restartQQ(){qqState={i:0,score:0};renderQQ();}
+
+/* --- Словарь --- */
+ROUTES.gloss=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Словарь</h2>
+  <p class="section-sub">Термины, титулы, артефакты и места из книги.</p>
+  <input class="search" id="gSearch" placeholder="Поиск по термину или описанию..." oninput="renderGloss()">
+  <div class="glist" id="gList"></div>
+</div></section>`;
+ROUTES.gloss.after=()=>renderGloss();
+
+function renderGloss(){
+ const q=(document.getElementById("gSearch").value||"").toLowerCase();
+ const list=GLOSSARY.filter(g=>g.t.toLowerCase().includes(q)||g.d.toLowerCase().includes(q));
+ const el=document.getElementById("gList");
+ if(!list.length){el.innerHTML='<div class="nores">Ничего не найдено.</div>';return;}
+ el.innerHTML=list.map(g=>`
+  <div class="gitem">
+    <span class="term">${g.t}</span><span class="cat">${g.c}</span>
+    <div class="def">${g.d}</div>
+  </div>`).join("");
+}
+
+/* --- Таймлайн --- */
+ROUTES.timeline=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Таймлайн</h2>
+  <p class="section-sub">Ключевые события книги.</p>
+  <div class="timeline">${TIMELINE.map(t=>`
+    <div class="tl"><div class="tl-title">${t.t}</div><div class="tl-text">${t.d}</div></div>`).join("")}
+  </div>
+</div></section>`;
+ROUTES.timeline.after=()=>{
+ const items=document.querySelectorAll(".tl");
+ const obs=new IntersectionObserver(es=>{
+   es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("active");});
+ },{threshold:.4});
+ items.forEach(i=>obs.observe(i));
+};
+
+/* --- Трекер --- */
+ROUTES.tracker=()=>{
+ const done=JSON.parse(localStorage.getItem("pvt_done")||"[]");
+ return `<section class="section"><div class="container">
+  <h2 class="section-title">Трекер чтения</h2>
+  <p class="section-sub">Отмечай прочитанные главы — прогресс сохраняется в браузере.</p>
+  <div class="tracker">
+    <div class="tbar"><div class="tbar-fill" id="tFill"></div></div>
+    <div class="tcount" id="tCount"></div>
+  </div>
+  <div class="chapters" id="chList">
+    ${CHAPTERS.map((c,i)=>`
+      <div class="ch ${done.includes(i)?'done':''}" data-i="${i}">
+        <input type="checkbox" id="ch${i}" ${done.includes(i)?"checked":""} onchange="toggleCh(${i},this)">
+        <label for="ch${i}">${c}</label>
+      </div>`).join("")}
+  </div>
+ </div></section>`;
+};
+ROUTES.tracker.after=()=>updateTracker();
+
+function toggleCh(i,cb){
+ let done=JSON.parse(localStorage.getItem("pvt_done")||"[]");
+ if(cb.checked){if(!done.includes(i))done.push(i);}
+ else{done=done.filter(x=>x!==i);}
+ localStorage.setItem("pvt_done",JSON.stringify(done));
+ document.querySelector(`.ch[data-i="${i}"]`).classList.toggle("done",cb.checked);
+ updateTracker();
+}
+function updateTracker(){
+ const done=JSON.parse(localStorage.getItem("pvt_done")||"[]");
+ const p=Math.round(done.length/CHAPTERS.length*100);
+ const f=document.getElementById("tFill"),c=document.getElementById("tCount");
+ if(f)f.style.width=p+"%";
+ if(c)c.textContent=`Прочитано ${done.length} из ${CHAPTERS.length} (${p}%)`;
+}
+
+/* --- Кодекс --- */
+ROUTES.codex=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Кодекс</h2>
+  <p class="section-sub">Исчезающие чернила: наведи или нажми на пропуск, чтобы проявить текст.</p>
+  <div class="codex">
+    <h2>Двенадцать пустых</h2>
+    ${CODEX.map(line=>`<p>${hideSome(line)}</p>`).join("")}
+    <div class="codex-hint">Николаус Марриенсен · Лавер Раверсин · Шаал Де Лавер</div>
+  </div>
+</div></section>`;
+ROUTES.codex.after=()=>{
+ document.querySelectorAll(".ink").forEach(s=>{
+   s.addEventListener("click",()=>s.classList.toggle("on"));
+ });
+};
+function hideSome(line){
+ const words=line.split(" ");
+ return words.map(w=>{
+   if(w.length>4&&Math.random()>.45){
+     return `<span class="ink">${w}</span>`;
+   }
+   return w;
+ }).join(" ");
+}
+
+/* --- Досье --- */
+ROUTES.dossier=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Досье ше’ру</h2>
+  <p class="section-sub">Характеристики — оценка по тексту книги.</p>
+  <div class="dgrid">
+    ${DOSSIER.map(d=>`
+      <div class="dcard">
+        <h3>${d.n}</h3>
+        <div class="sub">${d.s}</div>
+        <div class="stats">
+          ${Object.entries(d.st).map(([k,v])=>`
+            <div class="stat">
+              <div class="stat-l"><span>${k}</span><span>${v}</span></div>
+              <div class="stat-b"><div class="stat-f" data-v="${v}"></div></div>
+            </div>`).join("")}
+        </div>
+        <div class="desc">${d.d}</div>
+      </div>`).join("")}
+  </div>
+</div></section>`;
+ROUTES.dossier.after=()=>{
+ setTimeout(()=>{
+   document.querySelectorAll(".stat-f").forEach(f=>{f.style.width=f.dataset.v+"%";});
+ },100);
+};
+
+/* --- Пасхалки --- */
+ROUTES.eggs=()=>`
+<section class="section"><div class="container">
+  <h2 class="section-title">Пасхалки и кроссоверы</h2>
+  <p class="section-sub">Нажми на карточку, чтобы открыть отсылку.</p>
+  <div class="eggs">
+    ${EGGS.map(e=>`
+      <div class="egg" onclick="this.classList.toggle('open')">
+        <div class="front"><h3>${e.f}</h3><p>Нажми, чтобы открыть</p></div>
+        <div class="back"><p>${e.b}</p></div>
+      </div>`).join("")}
+  </div>
+</div></section>`;
+
+/* ============================================================
+   СТАРТ
+   ============================================================ */
+buildNav();
+if(!location.hash)location.hash="home";
+render();
+</script>
+</body>
+</html>
